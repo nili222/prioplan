@@ -22,19 +22,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Projekt herunterladen
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+
+      - name: pnpm einrichten
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10
 
       - name: Node.js einrichten
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 22
-          cache: npm
+          node-version: 24
+          cache: pnpm
 
       - name: Abhängigkeiten installieren
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Website bauen
-        run: npm run build
+        run: pnpm run build
 
       - name: GitHub Pages vorbereiten
         uses: actions/configure-pages@v5
